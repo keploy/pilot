@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -8,9 +9,8 @@ import (
 	"sort"
 	"strings"
 
-	"go.keploy.io/server/cmd"
-	"go.keploy.io/server/pkg/models"
-	"go.keploy.io/server/utils"
+	"github.com/spf13/viper"
+	"go.keploy.io/server/v2/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -42,28 +42,6 @@ func CheckFileExists(path string) bool {
 		return false
 	}
 	return true
-}
-
-func GetNoiseFromConfig(configPath string) (models.GlobalNoise, models.TestsetNoise, error) {
-	globalNoise := make(models.GlobalNoise)
-	testSetNoise := make(models.TestsetNoise)
-
-	configFilePath := filepath.Join(configPath, "keploy-config.yaml")
-	if isExist := CheckFileExists(configFilePath); !isExist {
-		return globalNoise, testSetNoise, fmt.Errorf("config file does not exist at path: %s", configFilePath)
-	}
-	confTest, err := cmd.ReadTestConfig(configFilePath)
-	if err != nil {
-		confErr := fmt.Errorf("failed to read test config from the config file due to error: %s", err)
-		fmt.Println("You have probably edited the config file incorrectly. Please follow the guide below.")
-		fmt.Println(utils.ConfigGuide)
-		return globalNoise, testSetNoise, confErr
-	}
-
-	globalNoise = confTest.GlobalNoise.Global
-	testSetNoise = confTest.GlobalNoise.Testsets
-
-	return globalNoise, testSetNoise, nil
 }
 
 func compareSessions(session1, session2 []string, logger *zap.Logger) bool {
@@ -138,8 +116,29 @@ func getAbsolutePath(path string) (string, error) {
 			return "", fmt.Errorf("failed to get the path of current directory:%v", err)
 		}
 		path = cdirPath
-	} else {
-		// user provided the absolute path
 	}
+	// else if user provides absolute path, then return the same path
 	return path, nil
+}
+
+func GetNoiseFromConfig(logger *zap.Logger, configPath string) (*config.Globalnoise, error) {
+	var cfg *config.Config = &config.Config{}
+
+	viper.SetConfigName("keploy")
+	viper.SetConfigType("yml")
+	viper.AddConfigPath(configPath)
+	if err := viper.ReadInConfig(); err != nil {
+		var configFileNotFoundError viper.ConfigFileNotFoundError
+		if !errors.As(err, &configFileNotFoundError) {
+			return &cfg.Test.GlobalNoise, errors.New("failed to read config file")
+		}
+		logger.Info("config file not found", zap.String("configPath", configPath))
+		return &cfg.Test.GlobalNoise, nil
+	}
+
+	if err := viper.Unmarshal(cfg); err != nil {
+		return &cfg.Test.GlobalNoise, errors.New("failed to unmarshal the config")
+	}
+
+	return &cfg.Test.GlobalNoise, nil
 }
