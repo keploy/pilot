@@ -1,0 +1,37 @@
+name: Go
+
+on:
+  push:
+   branches: [ main ]
+  pull_request:
+    branches: [ main ]
+#   pull_request_target:
+#     types: [assigned, opened, synchronize, reopened]
+
+jobs:
+
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+#      - name: Check commit messages
+#        uses: wagoid/commitlint-github-action@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.22
+
+      - name: Build
+        run: go build -v ./...
+
+      - uses: codfish/semantic-release-action@v1
+        with:
+          dry_run: true
+          additional_packages: |
+            ['@semantic-release/exec']
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
