@@ -9,7 +9,7 @@ import (
 	"sort"
 
 	"go.keploy.io/server/v2/pkg"
-	testdb "go.keploy.io/server/v2/pkg/platform/yaml/testDb"
+	testdb "go.keploy.io/server/v2/pkg/platform/yaml/testdb"
 	"go.keploy.io/server/v2/pkg/service/replay"
 	"go.uber.org/zap"
 )
