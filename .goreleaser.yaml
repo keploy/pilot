@@ -7,7 +7,7 @@ builds:
   - binary: pilot
     dir: "."
     id: pilot
-    main: "./*"
+    main: "./"
     goos:
       - linux
     goarch:
