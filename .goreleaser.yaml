@@ -5,10 +5,9 @@ archives:
 
 builds:
   - binary: pilot
+    dir: "."
     id: pilot
     main: ./main.go
-    env:
-      - CGO_ENABLED=0
     goos:
       - linux
     goarch:
