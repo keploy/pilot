@@ -1,0 +1,17 @@
+# GoReleaser configuration
+archives:
+ - name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+   format: binary
+
+builds:
+  - binary: pilot
+    id: pilot
+    main: ./main.go
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      # - windows
+    goarch:
+      - amd64
+      - arm64
