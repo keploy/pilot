@@ -4,11 +4,11 @@ go 1.22.1
 
 replace github.com/jackc/pgproto3/v2 => github.com/keploy/pgproto3/v2 v2.0.2
 
-replace go.keploy.io/server/v2 => /Users/gouravkumar/Desktop/Keploy/Keploy-Server/keploy
+// replace go.keploy.io/server/v2 => /Users/gouravkumar/Desktop/Keploy/Keploy-Server/keploy
 
 require (
 	github.com/spf13/viper v1.18.2
-	go.keploy.io/server/v2 v2.1.0-alpha8
+	go.keploy.io/server/v2 v2.1.0-alpha10
 	go.uber.org/zap v1.24.0
 )
 
