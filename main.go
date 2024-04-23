@@ -162,8 +162,9 @@ func compareTestCases(ctx context.Context, logger *zap.Logger, db1, db2 *testdb.
 			return false
 		}
 
+		// Sort in ascending order of test case name getting in "Keploy-Test-Id"
 		sort.Slice(readTcs2, func(i, j int) bool {
-			return readTcs2[i].Name < readTcs2[j].Name
+			return readTcs2[i].HTTPReq.Header["Keploy-Test-Id"] < readTcs2[j].HTTPReq.Header["Keploy-Test-Id"]
 		})
 
 		if len(readTcs1) != len(readTcs2) {
@@ -177,13 +178,16 @@ func compareTestCases(ctx context.Context, logger *zap.Logger, db1, db2 *testdb.
 			ok, req, resp, absRes := replay.AbsMatch(readTcs1[i], readTcs2[i], noiseConfig, true, logger)
 			if !ok {
 				logger.Error("Tests are different", zap.String("Pre-recorded", readTcs1[i].Name), zap.String("Test-bench", readTcs2[i].Name))
-				if !req {
-					fmt.Printf("HttpReq diff:%v\n", absRes.Req)
-				}
-				if !resp {
-					fmt.Printf("HttpResp diff:%v\n", absRes.Resp)
-				}
+
+				printDiff(!req, "HTTP Request Difference: %v\n", absRes.Req)
+				printDiff(!resp, "HTTP Response Difference: %v\n", absRes.Resp)
+				printDiff(!absRes.CurlResult.Normal, "cURL Result Difference: %v\n", absRes.CurlResult)
+				printDiff(!absRes.Name.Normal, "Test Case Name Difference: %v\n", absRes.Name)
+
+				continue
 			}
+
+			printDiff(!absRes.Name.Normal, "Test Case Name Difference: %v\n", absRes.Name)
 			testSetRes = testSetRes && ok
 		}
 		passedOverall = passedOverall && testSetRes
@@ -216,8 +220,9 @@ func prepareMockAssertion(ctx context.Context, logger *zap.Logger, db1, db2 *tes
 			return false
 		}
 
+		// Sort in ascending order of test case name getting in "Keploy-Test-Id"
 		sort.Slice(readTcs2, func(i, j int) bool {
-			return readTcs2[i].Name < readTcs2[j].Name
+			return readTcs2[i].HTTPReq.Header["Keploy-Test-Id"] < readTcs2[j].HTTPReq.Header["Keploy-Test-Id"]
 		})
 
 		if len(readTcs1) != len(readTcs2) {

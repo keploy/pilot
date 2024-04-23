@@ -142,3 +142,10 @@ func GetNoiseFromConfig(logger *zap.Logger, configPath string) (*config.Globalno
 
 	return &cfg.Test.GlobalNoise, nil
 }
+
+// printDiff checks the condition and prints the message if the condition is true
+func printDiff(condition bool, message string, value interface{}) {
+	if condition {
+		fmt.Printf(message, value)
+	}
+}
