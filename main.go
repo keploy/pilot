@@ -48,7 +48,7 @@ func main() {
 	*preRecPath, err = getAbsolutePath(*preRecPath)
 	if err != nil {
 		logger.Error("failed to get absolute path", zap.String("path", *preRecPath), zap.Error(err))
-		return
+		os.Exit(1)
 	}
 
 	*preRecPath = filepath.Join(*preRecPath, "keploy")
@@ -56,41 +56,41 @@ func main() {
 	*testBenchPath, err = getAbsolutePath(*testBenchPath)
 	if err != nil {
 		logger.Error("failed to get absolute path", zap.String("path", *testBenchPath), zap.Error(err))
-		return
+		os.Exit(1)
 	}
 	*testBenchPath = filepath.Join(*testBenchPath, "keploy")
 
 	*configPath, err = getAbsolutePath(*configPath)
 	if err != nil {
 		logger.Error("failed to get absolute path", zap.String("path", *configPath), zap.Error(err))
-		return
+		os.Exit(1)
 	}
-	println("ConfigPath:", *configPath)
+
 	// get all the sessions
 	tsets1, err := pkg.ReadSessionIndices(*preRecPath, logger)
 	if err != nil {
 		logger.Error("failed to read session indices", zap.String("path", *preRecPath), zap.Error(err))
-		return
+		os.Exit(1)
 	}
 
 	tsets2, err := pkg.ReadSessionIndices(*testBenchPath, logger)
 	if err != nil {
 		logger.Error("failed to read session indices", zap.String("path", *testBenchPath), zap.Error(err))
-		return
+		os.Exit(1)
 	}
 
 	// compare sessions, both should contain equal number of same sessions
 	ok := compareSessions(tsets1, tsets2, logger)
 	if !ok {
 		logger.Error("sessions are not equal")
-		return
+		os.Exit(1)
 	}
 
 	sessions := tsets1
 
 	if len(sessions) == 0 {
 		logger.Info("no sessions found")
-		return
+		os.Exit(0)
 	}
 
 	// initialize the test dbs
