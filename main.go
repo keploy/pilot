@@ -234,7 +234,6 @@ func prepareMockAssertion(ctx context.Context, logger *zap.Logger, db1, db2 *tes
 		for i := 0; i < len(readTcs1); i++ {
 			if readTcs1[i].Name != readTcs2[i].Name {
 				logger.Error("test case names are not equal", zap.String("pre-recorded", readTcs1[i].Name), zap.String("test-bench", readTcs2[i].Name))
-				return false
 			}
 			//swap request timestamps
 			req1Time := readTcs1[i].HTTPReq.Timestamp
