@@ -8,7 +8,7 @@ replace github.com/jackc/pgproto3/v2 => github.com/keploy/pgproto3/v2 v2.0.2
 
 require (
 	github.com/spf13/viper v1.19.0
-	go.keploy.io/server/v2 v2.3.0-beta8
+	go.keploy.io/server/v2 v2.3.0-beta9
 	go.uber.org/zap v1.26.0
 )
 

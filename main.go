@@ -187,7 +187,7 @@ func compareTestCases(ctx context.Context, logger *zap.Logger, db1, db2 *testdb.
 				continue
 			}
 
-			printDiff(!absRes.Name.Normal, "Test Case Name Difference: %v\n", absRes.Name)
+			// printDiff(!absRes.Name.Normal, "Test Case Name Difference: %v\n", absRes.Name)
 			testSetRes = testSetRes && ok
 		}
 		passedOverall = passedOverall && testSetRes
