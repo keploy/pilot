@@ -183,7 +183,7 @@ func compareTestCases(ctx context.Context, logger *zap.Logger, db1, db2 *testdb.
 				printDiff(!resp, "HTTP Response Difference: %v\n", absRes.Resp)
 				printDiff(!absRes.CurlResult.Normal, "cURL Result Difference: %v\n", absRes.CurlResult)
 				printDiff(!absRes.Name.Normal, "Test Case Name Difference: %v\n", absRes.Name)
-
+				testSetRes = false
 				continue
 			}
 
@@ -232,9 +232,9 @@ func prepareMockAssertion(ctx context.Context, logger *zap.Logger, db1, db2 *tes
 
 		//Swap test timestamps of both request and response
 		for i := 0; i < len(readTcs1); i++ {
-			if readTcs1[i].Name != readTcs2[i].Name {
-				logger.Error("test case names are not equal", zap.String("pre-recorded", readTcs1[i].Name), zap.String("test-bench", readTcs2[i].Name))
-			}
+			// if readTcs1[i].Name != readTcs2[i].Name {
+			// 	logger.Error("test case names are not equal", zap.String("pre-recorded", readTcs1[i].Name), zap.String("test-bench", readTcs2[i].Name))
+			// }
 			//swap request timestamps
 			req1Time := readTcs1[i].HTTPReq.Timestamp
 			req2Time := readTcs2[i].HTTPReq.Timestamp
