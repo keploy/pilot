@@ -170,8 +170,8 @@ github.com/yudai/pp v2.0.1+incompatible h1:Q4//iY4pNF6yPLZIigmvcl7k/bPgrcTPIFIcm
 github.com/yudai/pp v2.0.1+incompatible/go.mod h1:PuxR/8QJ7cyCkFp/aUDS+JY727OFEZkTdatxwunjIkc=
 github.com/yusufpapurcu/wmi v1.2.4 h1:zFUKzehAFReQwLys1b/iSMl+JQGSCSjtVqQn9bBrPo0=
 github.com/yusufpapurcu/wmi v1.2.4/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQmPyzfmi0=
-go.keploy.io/server/v2 v2.3.0-beta8 h1:UoPcJqgyuikHtDwotF7Rj6zSwyuC7heqZhFIkl0BoQ0=
-go.keploy.io/server/v2 v2.3.0-beta8/go.mod h1:QrclwD+1fKkYZucmjXfww+OOq/Q2zpAXsuIb5ki1Q/k=
+go.keploy.io/server/v2 v2.3.0-beta9 h1:H9bhTbowIfUULq76IkXMh6SmuvDptyBQHtByphBUpMM=
+go.keploy.io/server/v2 v2.3.0-beta9/go.mod h1:QrclwD+1fKkYZucmjXfww+OOq/Q2zpAXsuIb5ki1Q/k=
 go.mongodb.org/mongo-driver v1.11.6 h1:XM7G6PjiGAO5betLF13BIa5TlLUUE3uJ/2Ox3Lz1K+o=
 go.mongodb.org/mongo-driver v1.11.6/go.mod h1:G9TgswdsWjX4tmDA5zfs2+6AEPpYJwqblyjsfuh8oXY=
 go.uber.org/goleak v1.2.0 h1:xqgm/S+aQvhWFTtR0XK3Jvg7z8kGV8P4X14IzwN3Eqk=

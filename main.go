@@ -181,7 +181,6 @@ func compareTestCases(ctx context.Context, logger *zap.Logger, db1, db2 *testdb.
 
 				printDiff(!req, "HTTP Request Difference: %v\n", absRes.Req)
 				printDiff(!resp, "HTTP Response Difference: %v\n", absRes.Resp)
-				printDiff(!absRes.CurlResult.Normal, "cURL Result Difference: %v\n", absRes.CurlResult)
 				printDiff(!absRes.Name.Normal, "Test Case Name Difference: %v\n", absRes.Name)
 				testSetRes = false
 				continue
